@@ -19,6 +19,8 @@ namespace InetMarket.Models
         public DbSet<Property> Properties { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ValueOrder> ValueOrders { get; set; }
+        public DbSet<Value> Values { get; set;}
+        public DbSet<Provider> Providers { get; set; }
 
 
 
