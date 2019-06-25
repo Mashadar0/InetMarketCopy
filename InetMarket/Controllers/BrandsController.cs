@@ -9,22 +9,22 @@ using InetMarket.Models;
 
 namespace InetMarket.Controllers
 {
-    public class ProductsController : Controller
+    public class BrandsController : Controller
     {
         private readonly MarketContext _context;
 
-        public ProductsController(MarketContext context)
+        public BrandsController(MarketContext context)
         {
             _context = context;
         }
 
-        // GET: Products
+        // GET: Brands
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            return View(await _context.Brands.ToListAsync());
         }
 
-        // GET: Products/Details/5
+        // GET: Brands/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,45 +32,39 @@ namespace InetMarket.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var brand = await _context.Brands
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (brand == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(brand);
         }
 
-        // GET: Products/Create
+        // GET: Brands/Create
         public IActionResult Create()
         {
-            SelectList categories = new SelectList(_context.Categories, "Id", "Title");
-            ViewBag.Categories = categories;
-
-            SelectList brands = new SelectList(_context.Brands, "Id", "Title");
-            ViewBag.Brands = brands;
-
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Brands/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,MainImage,IsDiscount,IsMane,CategoryId,Price,BrandId")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Title")] Brand brand)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                _context.Add(brand);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(brand);
         }
 
-        // GET: Products/Edit/5
+        // GET: Brands/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,29 +72,22 @@ namespace InetMarket.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            var brand = await _context.Brands.FindAsync(id);
+            if (brand == null)
             {
                 return NotFound();
             }
-
-            SelectList categories = new SelectList(_context.Categories, "Id", "Title");
-            ViewBag.Categories = categories;
-
-            SelectList brands = new SelectList(_context.Brands, "Id", "Title");
-            ViewBag.Brands = brands;
-
-            return View(product);
+            return View(brand);
         }
 
-        // POST: Products/Edit/5
+        // POST: Brands/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,MainImage,IsDiscount,IsMane,CategoryId,Price,BrandId")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] Brand brand)
         {
-            if (id != product.Id)
+            if (id != brand.Id)
             {
                 return NotFound();
             }
@@ -109,12 +96,12 @@ namespace InetMarket.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(brand);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!BrandExists(brand.Id))
                     {
                         return NotFound();
                     }
@@ -125,10 +112,10 @@ namespace InetMarket.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(brand);
         }
 
-        // GET: Products/Delete/5
+        // GET: Brands/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,30 +123,30 @@ namespace InetMarket.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var brand = await _context.Brands
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (brand == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(brand);
         }
 
-        // POST: Products/Delete/5
+        // POST: Brands/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
+            var brand = await _context.Brands.FindAsync(id);
+            _context.Brands.Remove(brand);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool BrandExists(int id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return _context.Brands.Any(e => e.Id == id);
         }
     }
 }
