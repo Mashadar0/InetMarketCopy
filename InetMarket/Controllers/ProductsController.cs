@@ -45,6 +45,9 @@ namespace InetMarket.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            SelectList categories = new SelectList(_context.Categories, "Id", "Title");
+            ViewBag.Categories = categories;
+
             return View();
         }
 
