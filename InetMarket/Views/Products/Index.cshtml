@@ -1,46 +1,60 @@
-﻿@model IEnumerable<InetMarket.Models.Product>
+﻿@model InetMarket.Models.ProductListView
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Продукты</h2>
+<h2>View</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form method="get">
+    <div class="form-inline">
+        <label class="control-label">Categories: </label>
+        @Html.DropDownList("categoryId", Model.Categories as SelectList,
+                    htmlAttributes: new { @class = "form-control" })
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MainImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDiscount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsMane)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BrandId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.MainImage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.IsDiscount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.IsMane)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.CategoryId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.BrandId)
+                </th>
+                <th></th>
+            </tr>
+            break;
+        }
+        </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Products) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)

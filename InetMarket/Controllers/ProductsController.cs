@@ -19,15 +19,36 @@ namespace InetMarket.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Products.ToListAsync());
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Products.ToListAsync());
+        //}
 
-        public async Task<IActionResult> ListForCategories(int categoryId)
+        //public async Task<IActionResult> ListForCategories(int categoryId)
+        //{
+        //    List < Product > prods = await _context.Products.Where(product => product.CategoryId == categoryId).ToListAsync();
+        //    return View(prods);
+        //}
+
+        public IActionResult Index(int? categoryId)
         {
-            List < Product > prods = await _context.Products.Where(product => product.CategoryId == categoryId).ToListAsync();
-            return View(prods);
+            IQueryable<Product> products = _context.Products.Include(p => p.Category);
+            if (categoryId != null && categoryId != 0)
+            {
+                products = products.Where(p => p.CategoryId == categoryId);
+            }
+
+            List<Category> categories = _context.Categories.ToList();
+            // устанавливаем начальный элемент, который позволит выбрать всех
+            categories.Insert(0, new Category { Title = "All", Id = 0 });
+
+            ProductListView plv = new ProductListView
+            {
+                Products = products.ToList(),
+                Categories = new SelectList(categories, "Id", "Title"),
+            };
+            return View(plv);
+            //return View(await _context.Products.ToListAsync());
         }
 
         // GET: Products/Details/5
