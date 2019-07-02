@@ -16,6 +16,7 @@ namespace InetMarket.Models
         public int CategoryId { get; set; }
         public string Price { get; set; }
         public int BrandId { get; set; }
+        public int ProviderId { get; set; }
         public Category Category { get; set; }
     }
 }

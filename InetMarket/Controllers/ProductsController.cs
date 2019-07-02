@@ -78,6 +78,9 @@ namespace InetMarket.Controllers
             SelectList brands = new SelectList(_context.Brands, "Id", "Title");
             ViewBag.Brands = brands;
 
+            SelectList providers = new SelectList(_context.Providers, "Id", "Title");
+            ViewBag.Providers = providers;
+
             return View();
         }
 
@@ -116,6 +119,9 @@ namespace InetMarket.Controllers
 
             SelectList brands = new SelectList(_context.Brands, "Id", "Title");
             ViewBag.Brands = brands;
+
+            SelectList providers = new SelectList(_context.Providers, "Id", "Title");
+            ViewBag.Providers = providers;
 
             return View(product);
         }

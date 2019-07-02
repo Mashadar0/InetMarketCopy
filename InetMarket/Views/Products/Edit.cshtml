@@ -56,6 +56,10 @@
                 @Html.DropDownListFor(model => model.BrandId, ViewBag.Brands as SelectList)
             </div>
             <div class="form-group">
+                <label class="control-label">Provider</label><br />
+                @Html.DropDownListFor(model => model.ProviderId, ViewBag.Providers as SelectList)
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>

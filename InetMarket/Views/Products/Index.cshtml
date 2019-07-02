@@ -48,6 +48,9 @@
                 <th>
                     @Html.DisplayNameFor(modellItem => item.BrandId)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.ProviderId)
+                </th>
                 <th></th>
             </tr>
             break;
@@ -79,6 +82,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BrandId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProviderId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
