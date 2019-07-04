@@ -9,22 +9,23 @@ using InetMarket.Models;
 
 namespace InetMarket.Controllers
 {
-    public class OrdersController : Controller
+    public class FiltersController : Controller
     {
         private readonly MarketContext _context;
 
-        public OrdersController(MarketContext context)
+        public FiltersController(MarketContext context)
         {
             _context = context;
         }
 
-        // GET: Orders
+        // GET: Filters
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Orders.ToListAsync());
+            var filterCateg = _context.Filters.Include(p => p.Category);
+            return View(await _context.Filters.ToListAsync());
         }
 
-        // GET: Orders/Details/5
+        // GET: Filters/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,68 +33,68 @@ namespace InetMarket.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders
+            var filter = await _context.Filters
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
+            if (filter == null)
             {
                 return NotFound();
             }
 
-            return View(order);
+            return View(filter);
         }
 
-        // GET: Orders/Create
+        // GET: Filters/Create
         public IActionResult Create()
         {
-            SelectList clients = new SelectList(_context.Clients, "Id", "Title");
-            ViewBag.Clients = clients;
+            SelectList categories = new SelectList(_context.Categories, "Id", "Title");
+            ViewBag.Categories = categories;
 
             return View();
         }
 
-        // POST: Orders/Create
+        // POST: Filters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Name,Email,Phone,Comment,DateTime,ClientId")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,Title,CategoryId")] Filter filter)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(order);
+                _context.Add(filter);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(order);
+            return View(filter);
         }
 
-        // GET: Orders/Edit/5
+        // GET: Filters/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            SelectList clients = new SelectList(_context.Clients, "Id", "Title");
-            ViewBag.Clients = clients;
+            SelectList categories = new SelectList(_context.Categories, "Id", "Title");
+            ViewBag.Categories = categories;
 
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
+            var filter = await _context.Filters.FindAsync(id);
+            if (filter == null)
             {
                 return NotFound();
             }
-            return View(order);
+            return View(filter);
         }
 
-        // POST: Orders/Edit/5
+        // POST: Filters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Name,Email,Phone,Comment,DateTime,ClientId")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,CategoryId")] Filter filter)
         {
-            if (id != order.Id)
+            if (id != filter.Id)
             {
                 return NotFound();
             }
@@ -102,12 +103,12 @@ namespace InetMarket.Controllers
             {
                 try
                 {
-                    _context.Update(order);
+                    _context.Update(filter);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrderExists(order.Id))
+                    if (!FilterExists(filter.Id))
                     {
                         return NotFound();
                     }
@@ -118,10 +119,10 @@ namespace InetMarket.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(order);
+            return View(filter);
         }
 
-        // GET: Orders/Delete/5
+        // GET: Filters/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +130,30 @@ namespace InetMarket.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders
+            var filter = await _context.Filters
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
+            if (filter == null)
             {
                 return NotFound();
             }
 
-            return View(order);
+            return View(filter);
         }
 
-        // POST: Orders/Delete/5
+        // POST: Filters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
-            _context.Orders.Remove(order);
+            var filter = await _context.Filters.FindAsync(id);
+            _context.Filters.Remove(filter);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrderExists(int id)
+        private bool FilterExists(int id)
         {
-            return _context.Orders.Any(e => e.Id == id);
+            return _context.Filters.Any(e => e.Id == id);
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿@model InetMarket.Models.Provider
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавление поставщика";
 }
 
-<h2>Create</h2>
+<h2>Добавление</h2>
 
-<h4>Provider</h4>
+<h4>Поставщик</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -38,14 +38,14 @@
                 <span asp-validation-for="DateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Добавить" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Назад к списку</a>
 </div>
 
 @section Scripts {

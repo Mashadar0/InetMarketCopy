@@ -1,12 +1,12 @@
 ﻿@model InetMarket.Models.Product
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Изменение продукта";
 }
 
-<h2>Edit</h2>
+<h2>Изменить</h2>
 
-<h4>Product</h4>
+<h4>Продукт</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -60,14 +60,14 @@
                 @Html.DropDownListFor(model => model.ProviderId, ViewBag.Providers as SelectList)
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Назад к списку</a>
 </div>
 
 @section Scripts {

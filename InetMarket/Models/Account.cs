@@ -8,10 +8,12 @@ namespace InetMarket.Models
 {
     public class Account
     {
-            [Required]
-            public string Name { get; set; }
+        [Display (Name = "Логин")]
+        [Required(ErrorMessage = "Не указан логин")]
+        public string Name { get; set; }
 
-            [Required]
-            public string Password { get; set; }
+        [Display(Name = "Пароль")]
+        [Required(ErrorMessage = "Не указан пароль")]
+        public string Password { get; set; }
     }
 }

@@ -1,13 +1,13 @@
 ﻿@model InetMarket.Models.ProductListView
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Список продукции";
 }
 
-<h2>View</h2>
+<h2>Список</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Добавить</a>
 </p>
 
 <form method="get">
@@ -75,21 +75,21 @@
                 @Html.DisplayFor(modelItem => item.IsMane)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
+                @Html.DisplayFor(modelItem => item.Category.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BrandId)
+                @Html.DisplayFor(modelItem => item.Brand.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProviderId)
+                @Html.DisplayFor(modelItem => item.Provider.Title)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Подробно</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
 }

@@ -9,22 +9,22 @@ using InetMarket.Models;
 
 namespace InetMarket.Controllers
 {
-    public class OrdersController : Controller
+    public class ClientsController : Controller
     {
         private readonly MarketContext _context;
 
-        public OrdersController(MarketContext context)
+        public ClientsController(MarketContext context)
         {
             _context = context;
         }
 
-        // GET: Orders
+        // GET: Clients
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Orders.ToListAsync());
+            return View(await _context.Clients.ToListAsync());
         }
 
-        // GET: Orders/Details/5
+        // GET: Clients/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,68 +32,62 @@ namespace InetMarket.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders
+            var client = await _context.Clients
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
+            if (client == null)
             {
                 return NotFound();
             }
 
-            return View(order);
+            return View(client);
         }
 
-        // GET: Orders/Create
+        // GET: Clients/Create
         public IActionResult Create()
         {
-            SelectList clients = new SelectList(_context.Clients, "Id", "Title");
-            ViewBag.Clients = clients;
-
             return View();
         }
 
-        // POST: Orders/Create
+        // POST: Clients/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Name,Email,Phone,Comment,DateTime,ClientId")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,Phone")] Client client)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(order);
+                _context.Add(client);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(order);
+            return View(client);
         }
 
-        // GET: Orders/Edit/5
+        // GET: Clients/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            SelectList clients = new SelectList(_context.Clients, "Id", "Title");
-            ViewBag.Clients = clients;
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
+            var client = await _context.Clients.FindAsync(id);
+            if (client == null)
             {
                 return NotFound();
             }
-            return View(order);
+            return View(client);
         }
 
-        // POST: Orders/Edit/5
+        // POST: Clients/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Name,Email,Phone,Comment,DateTime,ClientId")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Phone")] Client client)
         {
-            if (id != order.Id)
+            if (id != client.Id)
             {
                 return NotFound();
             }
@@ -102,12 +96,12 @@ namespace InetMarket.Controllers
             {
                 try
                 {
-                    _context.Update(order);
+                    _context.Update(client);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrderExists(order.Id))
+                    if (!ClientExists(client.Id))
                     {
                         return NotFound();
                     }
@@ -118,10 +112,10 @@ namespace InetMarket.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(order);
+            return View(client);
         }
 
-        // GET: Orders/Delete/5
+        // GET: Clients/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +123,30 @@ namespace InetMarket.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders
+            var client = await _context.Clients
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
+            if (client == null)
             {
                 return NotFound();
             }
 
-            return View(order);
+            return View(client);
         }
 
-        // POST: Orders/Delete/5
+        // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
-            _context.Orders.Remove(order);
+            var client = await _context.Clients.FindAsync(id);
+            _context.Clients.Remove(client);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrderExists(int id)
+        private bool ClientExists(int id)
         {
-            return _context.Orders.Any(e => e.Id == id);
+            return _context.Clients.Any(e => e.Id == id);
         }
     }
 }

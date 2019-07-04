@@ -1,12 +1,12 @@
 ﻿@model InetMarket.Models.Brand
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Изменение марки авто";
 }
 
-<h2>Edit</h2>
+<h2>Изменение</h2>
 
-<h4>Brand</h4>
+<h4>Марка авто</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,14 +19,14 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Назад к списку</a>
 </div>
 
 @section Scripts {

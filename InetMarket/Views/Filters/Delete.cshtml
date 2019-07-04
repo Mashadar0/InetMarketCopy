@@ -1,14 +1,14 @@
-﻿@model InetMarket.Models.Brand
+﻿@model InetMarket.Models.Filter
 
 @{
-    ViewData["Title"] = "Удаление марки авто";
+    ViewData["Title"] = "Удаление фильтра";
 }
 
 <h2>Удаление</h2>
 
-<h3>Хотите удалить марку?</h3>
+<h3>Хотите удалить?</h3>
 <div>
-    <h4>Марка авто</h4>
+    <h4>Фильтр</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,11 +17,17 @@
         <dd>
             @Html.DisplayFor(model => model.Title)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CategoryId)
+        </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Удалить" class="btn btn-default" /> |
-        <a asp-action="Index">Назад к списку</a>
+        <a asp-action="Index">назад к списку</a>
     </form>
 </div>

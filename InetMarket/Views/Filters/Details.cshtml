@@ -1,13 +1,13 @@
-﻿@model InetMarket.Models.Brand
+﻿@model InetMarket.Models.Filter
 
 @{
-    ViewData["Title"] = "Подробно о марке";
+    ViewData["Title"] = "Подробно о фильтре";
 }
 
 <h2>Подробно</h2>
 
 <div>
-    <h4>Марка авто</h4>
+    <h4>Фильтр</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -15,6 +15,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CategoryId)
         </dd>
     </dl>
 </div>

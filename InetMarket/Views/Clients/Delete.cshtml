@@ -1,22 +1,16 @@
-﻿@model InetMarket.Models.Order
+﻿@model InetMarket.Models.Client
 
 @{
-    ViewData["Title"] = "Удаление заказа";
+    ViewData["Title"] = "Удаление клиента";
 }
 
-<h2>Удалить</h2>
+<h2>Удаление</h2>
 
 <h3>Хотите удалить?</h3>
 <div>
-    <h4>Заказ</h4>
+    <h4>Клиент</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -34,24 +28,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Comment)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Comment)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DateTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DateTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ClientId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ClientId)
         </dd>
     </dl>
     

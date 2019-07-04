@@ -1,10 +1,10 @@
-﻿@model IEnumerable<InetMarket.Models.Category>
+﻿@model IEnumerable<InetMarket.Models.Filter>
 
 @{
-    ViewData["Title"] = "Список категорий";
+    ViewData["Title"] = "Список фильтров";
 }
 
-<h2>Категории</h2>
+<h2>Список</h2>
 
 <p>
     <a asp-action="Create">Добавить</a>
@@ -14,6 +14,9 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.Title)
             </th>
             <th></th>
         </tr>
@@ -25,10 +28,12 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Подробно</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a> |
-                <a asp-area="" asp-controller="Products" asp-action="Index" asp-route-categoryId="@item.Id">Продукция</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
 }

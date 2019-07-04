@@ -18,20 +18,11 @@ namespace InetMarket.Controllers
             _context = context;
         }
 
-        // GET: Products
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.Products.ToListAsync());
-        //}
-
-        //public async Task<IActionResult> ListForCategories(int categoryId)
-        //{
-        //    List < Product > prods = await _context.Products.Where(product => product.CategoryId == categoryId).ToListAsync();
-        //    return View(prods);
-        //}
-
         public IActionResult Index(int? categoryId)
         {
+            var prodsCateg = _context.Products.Include(p => p.Category);
+            var prodsBrand = _context.Products.Include(p => p.Brand);
+            var prodsProvid = _context.Products.Include(p => p.Provider);
             IQueryable<Product> products = _context.Products.Include(p => p.Category);
             if (categoryId != null && categoryId != 0)
             {
@@ -48,7 +39,6 @@ namespace InetMarket.Controllers
                 Categories = new SelectList(categories, "Id", "Title"),
             };
             return View(plv);
-            //return View(await _context.Products.ToListAsync());
         }
 
         // GET: Products/Details/5
