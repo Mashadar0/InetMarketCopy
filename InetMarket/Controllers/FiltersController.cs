@@ -22,6 +22,7 @@ namespace InetMarket.Controllers
         public async Task<IActionResult> Index()
         {
             var filterCateg = _context.Filters.Include(p => p.Category);
+            List<Category> categories = _context.Categories.ToList();
             return View(await _context.Filters.ToListAsync());
         }
 

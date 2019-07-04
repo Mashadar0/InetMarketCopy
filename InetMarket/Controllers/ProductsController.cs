@@ -23,19 +23,20 @@ namespace InetMarket.Controllers
             var prodsCateg = _context.Products.Include(p => p.Category);
             var prodsBrand = _context.Products.Include(p => p.Brand);
             var prodsProvid = _context.Products.Include(p => p.Provider);
-            IQueryable<Product> products = _context.Products.Include(p => p.Category);
+            IQueryable<Product> productsCateg = _context.Products.Include(p => p.Category);
             if (categoryId != null && categoryId != 0)
             {
-                products = products.Where(p => p.CategoryId == categoryId);
+                productsCateg = productsCateg.Where(p => p.CategoryId == categoryId);
             }
-
             List<Category> categories = _context.Categories.ToList();
+            List<Brand> brands = _context.Brands.ToList();
+            List<Provider> providers = _context.Providers.ToList();
             // устанавливаем начальный элемент, который позволит выбрать всех
             categories.Insert(0, new Category { Title = "All", Id = 0 });
 
             ProductListView plv = new ProductListView
             {
-                Products = products.ToList(),
+                Products = productsCateg.ToList(),
                 Categories = new SelectList(categories, "Id", "Title"),
             };
             return View(plv);
