@@ -18,7 +18,7 @@ namespace InetMarket.Controllers
             _context = context;
         }
 
-        public IActionResult Index(int? categoryId)
+        public IActionResult Index(int? categoryId, int? filterId)
         {
             var prodsCateg = _context.Products.Include(p => p.Category);
             var prodsBrand = _context.Products.Include(p => p.Brand);
@@ -31,20 +31,35 @@ namespace InetMarket.Controllers
             List<Category> categories = _context.Categories.ToList();
             List<Brand> brands = _context.Brands.ToList();
             List<Provider> providers = _context.Providers.ToList();
+            List<Filter> filters = _context.Filters.ToList();
             // устанавливаем начальный элемент, который позволит выбрать всех
             categories.Insert(0, new Category { Title = "All", Id = 0 });
-
+            filters.Insert(0, new Filter { Title = "All", Id = 0 });
             ProductListView plv = new ProductListView
             {
                 Products = productsCateg.ToList(),
                 Categories = new SelectList(categories, "Id", "Title"),
+                Filters = new SelectList(filters, "Id", "Title"),
             };
             return View(plv);
+        }
+
+        [HttpPost]
+        public ActionResult CategorySearch(string title)
+        {
+            var allProducts = _context.Products.Where(a => a.Category.Title == title).ToList();
+            return PartialView(allProducts);
         }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var prodsCateg = _context.Products.Include(p => p.Category);
+            var prodsBrand = _context.Products.Include(p => p.Brand);
+            var prodsProvid = _context.Products.Include(p => p.Provider);
+            List<Category> categories = _context.Categories.ToList();
+            List<Brand> brands = _context.Brands.ToList();
+            List<Provider> providers = _context.Providers.ToList();
             if (id == null)
             {
                 return NotFound();

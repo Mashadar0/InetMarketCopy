@@ -1,7 +1,7 @@
-﻿@model InetMarket.Models.FilterListView
+﻿@model InetMarket.Models.FilterAddititonListView
 
 @{
-    ViewData["Title"] = "Список фильтров";
+    ViewData["Title"] = "Список доп. фильтров";
 }
 
 <h2>Список</h2>
@@ -12,8 +12,8 @@
 
 <form method="get">
     <div class="form-inline">
-        <label class="control-label">Категории: </label>
-        @Html.DropDownList("categoryId", Model.Categories as SelectList,
+        <label class="control-label">Фильтры: </label>
+        @Html.DropDownList("filterId", Model.Filters as SelectList,
                     htmlAttributes: new { @class = "form-control" })
         <input type="submit" value="Фильтр" class="btn btn-default" />
     </div>
@@ -21,14 +21,14 @@
 
 <table class="table">
     <thead>
-        @foreach (var item in Model.Filters)
+        @foreach (var item in Model.FilterAddititons)
         {
             <tr>
                 <th>
                     @Html.DisplayNameFor(modellItem => item.Title)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(modellItem => item.CategoryId)
+                    @Html.DisplayNameFor(modellItem => item.FilterId)
                 </th>
                 <th></th>
             </tr>
@@ -36,13 +36,13 @@
         }
     </thead>
     <tbody>
-@foreach (var item in Model.Filters) {
+@foreach (var item in Model.FilterAddititons) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.Title)
+                @Html.DisplayFor(modelItem => item.Filter.Title)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |

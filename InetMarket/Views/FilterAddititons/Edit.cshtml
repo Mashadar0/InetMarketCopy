@@ -1,0 +1,35 @@
+﻿@model InetMarket.Models.FilterAddititon
+
+@{
+    ViewData["Title"] = "Изменение доп. фильтра";
+}
+
+<h2>Изменение</h2>
+
+<h4>Дополнительный фильтр</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Фильтр</label><br />
+                @Html.DropDownListFor(model => model.FilterId, ViewBag.Filters as SelectList)
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку</a>
+</div>
+

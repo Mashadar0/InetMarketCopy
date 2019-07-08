@@ -1,0 +1,11 @@
+﻿@model IEnumerable<InetMarket.Models.Product>
+
+<div id="searchresults">
+    <h3>Все книги автора : @Model.First().Category</h3>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>@item.Title</li>
+        }
+    </ul>
+</div>

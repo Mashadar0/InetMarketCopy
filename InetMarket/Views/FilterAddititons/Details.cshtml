@@ -1,13 +1,13 @@
-﻿@model InetMarket.Models.Filter
+﻿@model InetMarket.Models.FilterAddititon
 
 @{
-    ViewData["Title"] = "Подробно о фильтре";
+    ViewData["Title"] = "Подробно о доп. фильтре";
 }
 
 <h2>Подробно</h2>
 
 <div>
-    <h4>Фильтр</h4>
+    <h4>Дополнительный фильтр</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,10 +17,10 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CategoryId)
+            @Html.DisplayNameFor(model => model.FilterId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Category.Title)
+            @Html.DisplayFor(model => model.Filter.Title)
         </dd>
     </dl>
 </div>

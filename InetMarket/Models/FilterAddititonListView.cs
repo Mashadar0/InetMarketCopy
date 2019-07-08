@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace InetMarket.Models
 {
-    public class ProductListView
+    public class FilterAddititonListView
     {
-        public IEnumerable<Product> Products { get; set; }
-        public SelectList Categories { get; set; }
+        public IEnumerable<FilterAddititon> FilterAddititons { get; set; }
         public SelectList Filters { get; set; }
     }
 }

@@ -17,5 +17,7 @@ namespace InetMarket.Models
 
         [Display(Name = "Фильтр")]
         public int FilterId { get; set; }
+
+        public Filter Filter { get; set; }
     }
 }

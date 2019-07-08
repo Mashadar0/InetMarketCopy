@@ -9,107 +9,104 @@ using InetMarket.Models;
 
 namespace InetMarket.Controllers
 {
-    public class FiltersController : Controller
+    public class FilterAddititonsController : Controller
     {
         private readonly MarketContext _context;
 
-        public FiltersController(MarketContext context)
+        public FilterAddititonsController(MarketContext context)
         {
             _context = context;
         }
 
-        // GET: Filters
-        public IActionResult Index(int? categoryId)
+        // GET: FilterAddititons
+        public IActionResult Index(int? filterId)
         {
-            var filterCateg = _context.Filters.Include(p => p.Category);
-            IQueryable<Filter> filterCategory = _context.Filters.Include(p => p.Category);
-            if (categoryId != null && categoryId != 0)
+            var filterAdditFilter = _context.FilterAddititons.Include(p => p.Filter);
+            IQueryable<FilterAddititon> filterAddititonsFilter  = _context.FilterAddititons.Include(p => p.Filter);
+            if (filterId != null && filterId != 0)
             {
-                filterCategory = filterCategory.Where(p => p.CategoryId == categoryId);
+                filterAddititonsFilter = filterAddititonsFilter.Where(p => p.FilterId == filterId);
             }
-            List<Category> categories = _context.Categories.ToList();
+            List<Filter> filters = _context.Filters.ToList();
             // устанавливаем начальный элемент, который позволит выбрать всех
-            categories.Insert(0, new Category { Title = "All", Id = 0 });
-            FilterListView flv = new FilterListView
+            filters.Insert(0, new Filter { Title = "All", Id = 0 });
+            FilterAddititonListView falv = new FilterAddititonListView
             {
-                Filters = filterCategory.ToList(),
-                Categories = new SelectList(categories, "Id", "Title"),
+                FilterAddititons = filterAddititonsFilter.ToList(),
+                Filters = new SelectList(filters, "Id", "Title"),
             };
-            return View(flv);
+            return View(falv);
         }
 
-        // GET: Filters/Details/5
+        // GET: FilterAddititons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var filterCateg = _context.Filters.Include(p => p.Category);
-            List<Category> categories = _context.Categories.ToList();
+            var filterAdditFilter = _context.FilterAddititons.Include(p => p.Filter);
+            List<Filter> filters = _context.Filters.ToList();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var filter = await _context.Filters
+            var filterAddititon = await _context.FilterAddititons
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (filter == null)
+            if (filterAddititon == null)
             {
                 return NotFound();
             }
 
-            return View(filter);
+            return View(filterAddititon);
         }
 
-        // GET: Filters/Create
+        // GET: FilterAddititons/Create
         public IActionResult Create()
         {
-            SelectList categories = new SelectList(_context.Categories, "Id", "Title");
-            ViewBag.Categories = categories;
+            SelectList filters = new SelectList(_context.Filters, "Id", "Title");
+            ViewBag.Filters = filters;
 
             return View();
         }
 
-        // POST: Filters/Create
+        // POST: FilterAddititons/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,CategoryId")] Filter filter)
+        public async Task<IActionResult> Create([Bind("Id,Title,FilterId")] FilterAddititon filterAddititon)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(filter);
+                _context.Add(filterAddititon);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(filter);
+            return View(filterAddititon);
         }
 
-        // GET: Filters/Edit/5
+        // GET: FilterAddititons/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            SelectList categories = new SelectList(_context.Categories, "Id", "Title");
-            ViewBag.Categories = categories;
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            var filter = await _context.Filters.FindAsync(id);
-            if (filter == null)
+            var filterAddititon = await _context.FilterAddititons.FindAsync(id);
+            if (filterAddititon == null)
             {
                 return NotFound();
             }
-            return View(filter);
+            return View(filterAddititon);
         }
 
-        // POST: Filters/Edit/5
+        // POST: FilterAddititons/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,CategoryId")] Filter filter)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,FilterId")] FilterAddititon filterAddititon)
         {
-            if (id != filter.Id)
+            if (id != filterAddititon.Id)
             {
                 return NotFound();
             }
@@ -118,12 +115,12 @@ namespace InetMarket.Controllers
             {
                 try
                 {
-                    _context.Update(filter);
+                    _context.Update(filterAddititon);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FilterExists(filter.Id))
+                    if (!FilterAddititonExists(filterAddititon.Id))
                     {
                         return NotFound();
                     }
@@ -134,10 +131,10 @@ namespace InetMarket.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(filter);
+            return View(filterAddititon);
         }
 
-        // GET: Filters/Delete/5
+        // GET: FilterAddititons/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,30 +142,30 @@ namespace InetMarket.Controllers
                 return NotFound();
             }
 
-            var filter = await _context.Filters
+            var filterAddititon = await _context.FilterAddititons
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (filter == null)
+            if (filterAddititon == null)
             {
                 return NotFound();
             }
 
-            return View(filter);
+            return View(filterAddititon);
         }
 
-        // POST: Filters/Delete/5
+        // POST: FilterAddititons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var filter = await _context.Filters.FindAsync(id);
-            _context.Filters.Remove(filter);
+            var filterAddititon = await _context.FilterAddititons.FindAsync(id);
+            _context.FilterAddititons.Remove(filterAddititon);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FilterExists(int id)
+        private bool FilterAddititonExists(int id)
         {
-            return _context.Filters.Any(e => e.Id == id);
+            return _context.FilterAddititons.Any(e => e.Id == id);
         }
     }
 }

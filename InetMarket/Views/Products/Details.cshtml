@@ -44,7 +44,7 @@
             @Html.DisplayNameFor(model => model.CategoryId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.CategoryId)
+            @Html.DisplayFor(model => model.Category.Title)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Price)
@@ -56,13 +56,13 @@
             @Html.DisplayNameFor(model => model.BrandId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.BrandId)
+            @Html.DisplayFor(model => model.Brand.Title)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ProviderId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ProviderId)
+            @Html.DisplayFor(model => model.Provider.Title)
         </dd>
     </dl>
 </div>
