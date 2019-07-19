@@ -10,7 +10,7 @@
     <a asp-action="Create">Добавить</a>
 </p>
 
-<form method="get">
+<form action="/Filters/CategorySearch" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" id="form0" method="get" data-ajax-method="get">
     <div class="form-inline">
         <label class="control-label">Категории: </label>
         @Html.DropDownList("categoryId", Model.Categories as SelectList,
@@ -19,37 +19,4 @@
     </div>
 </form>
 
-<table class="table">
-    <thead>
-        @foreach (var item in Model.Filters)
-        {
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.CategoryId)
-                </th>
-                <th></th>
-            </tr>
-            break;
-        }
-    </thead>
-    <tbody>
-@foreach (var item in Model.Filters) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Подробно</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div id="results"></div>

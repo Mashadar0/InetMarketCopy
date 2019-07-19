@@ -10,91 +10,13 @@
     <a asp-action="Create">Добавить</a>
 </p>
 
-<form method="get">
+<form action="/Products/CategorySearch" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" id="form0" method="get" data-ajax-method="get">
     <div class="form-inline">
         <label class="control-label">Категории: </label>
         @Html.DropDownList("categoryId", Model.Categories as SelectList,
-                    htmlAttributes: new { @class = "form-control" })
-         <label class="control-label">Фильтры: </label>
-        @Html.DropDownList("filterId", Model.Filters as SelectList,
                     htmlAttributes: new { @class = "form-control" })
         <input type="submit" value="Фильтр" class="btn btn-default" />
     </div>
 </form>
 
-<table class="table">
-    <thead>
-        @foreach (var item in Model.Products)
-        {
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.MainImage)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.IsDiscount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.IsMane)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.CategoryId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.BrandId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(modellItem => item.ProviderId)
-                </th>
-                <th></th>
-            </tr>
-            break;
-        }
-        </thead>
-    <tbody>
-@foreach (var item in Model.Products) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MainImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDiscount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsMane)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Provider.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Подробно</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div id="results"></div>

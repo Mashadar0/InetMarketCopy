@@ -19,29 +19,36 @@ namespace InetMarket.Controllers
         }
 
         // GET: FilterAddititons
-        public IActionResult Index(int? filterId)
-        {
-            var filterAdditFilter = _context.FilterAddititons.Include(p => p.Filter);
-            IQueryable<FilterAddititon> filterAddititonsFilter  = _context.FilterAddititons.Include(p => p.Filter);
-            if (filterId != null && filterId != 0)
-            {
-                filterAddititonsFilter = filterAddititonsFilter.Where(p => p.FilterId == filterId);
-            }
+        public IActionResult Index()
+        {      
             List<Filter> filters = _context.Filters.ToList();
             // устанавливаем начальный элемент, который позволит выбрать всех
             filters.Insert(0, new Filter { Title = "All", Id = 0 });
             FilterAddititonListView falv = new FilterAddititonListView
             {
-                FilterAddititons = filterAddititonsFilter.ToList(),
                 Filters = new SelectList(filters, "Id", "Title"),
             };
             return View(falv);
         }
 
+        [HttpGet]
+        public PartialViewResult FilterSearch(int? filterId)
+        {
+            IQueryable<FilterAddititon> filterAddititonsFilter = _context.FilterAddititons.Include(p => p.Filter);
+            if (filterId != null && filterId != 0)
+            {
+                filterAddititonsFilter = filterAddititonsFilter.Where(p => p.FilterId == filterId);
+            }
+            FilterAddititonListView falv = new FilterAddititonListView
+            {
+                FilterAddititons = filterAddititonsFilter.ToList(),
+            };
+            return PartialView(falv);
+        }
+
         // GET: FilterAddititons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var filterAdditFilter = _context.FilterAddititons.Include(p => p.Filter);
             List<Filter> filters = _context.Filters.ToList();
             if (id == null)
             {

@@ -19,29 +19,37 @@ namespace InetMarket.Controllers
         }
 
         // GET: Filters
-        public IActionResult Index(int? categoryId)
+        public IActionResult Index()
         {
-            var filterCateg = _context.Filters.Include(p => p.Category);
-            IQueryable<Filter> filterCategory = _context.Filters.Include(p => p.Category);
-            if (categoryId != null && categoryId != 0)
-            {
-                filterCategory = filterCategory.Where(p => p.CategoryId == categoryId);
-            }
             List<Category> categories = _context.Categories.ToList();
             // устанавливаем начальный элемент, который позволит выбрать всех
             categories.Insert(0, new Category { Title = "All", Id = 0 });
             FilterListView flv = new FilterListView
             {
-                Filters = filterCategory.ToList(),
                 Categories = new SelectList(categories, "Id", "Title"),
             };
             return View(flv);
         }
 
+        [HttpGet]
+        public PartialViewResult CategorySearch(int? categoryId)
+        {
+
+            IQueryable<Filter> filtersCateg = _context.Filters.Include(p => p.Category);
+            if (categoryId != null && categoryId != 0)
+            {
+                filtersCateg = filtersCateg.Where(p => p.CategoryId == categoryId);
+            }
+            FilterListView flv = new FilterListView
+            {
+                Filters = filtersCateg.ToList(),
+            };
+            return PartialView(flv);
+        }
+
         // GET: Filters/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var filterCateg = _context.Filters.Include(p => p.Category);
             List<Category> categories = _context.Categories.ToList();
             if (id == null)
             {

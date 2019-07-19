@@ -1,11 +1,80 @@
-﻿@model IEnumerable<InetMarket.Models.Product>
-
-<div id="searchresults">
-    <h3>Все книги автора : @Model.First().Category</h3>
-    <ul>
-        @foreach (var item in Model)
-        {
-            <li>@item.Title</li>
-        }
-    </ul>
+﻿@model InetMarket.Models.ProductListView
+<div id="sresults">
+        <table class="table">
+            <thead>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(modellItem => item.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(modellItem => item.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(modellItem => item.MainImage)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(modellItem => item.IsDiscount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(modellItem => item.IsMane)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(modellItem => item.CategoryId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(modellItem => item.Price)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(modellItem => item.BrandId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(modellItem => item.ProviderId)
+                        </th>
+                        <th></th>
+                    </tr>
+                    break;
+                }
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MainImage)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsDiscount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsMane)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Brand.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Provider.Title)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Подробно</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 </div>
