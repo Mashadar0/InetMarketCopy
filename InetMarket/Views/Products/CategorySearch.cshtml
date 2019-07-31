@@ -69,9 +69,9 @@
                             @Html.DisplayFor(modelItem => item.Provider.Title)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Подробно</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                            @Html.ActionLink("Изменить", "Edit", new { id = item.Id }, new { @class = "compItem" }) |
+                            @Html.ActionLink("Подробно", "Details", new { id = item.Id }, new { @class = "compItem" }) |
+                            @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "compItem" })
                         </td>
                     </tr>
                 }

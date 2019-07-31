@@ -4,10 +4,14 @@
     ViewData["Title"] = "Список поставщиков";
 }
 
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+
 <h2>Список</h2>
 
 <p>
-    <a asp-action="Create">Добавить</a>
+    @Html.ActionLink("Добавить", "Create", new { }, new { @class = "compItem" })
 </p>
 <table class="table">
     <thead>
@@ -31,29 +35,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Подробно</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Изменить", "Edit", new { id = item.Id }, new { @class = "compItem" }) |
+                    @Html.ActionLink("Подробно", "Details", new { id = item.Id }, new { @class = "compItem" }) |
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "compItem" })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<script type="text/javascript" src="~/js/test.js" defer></script>

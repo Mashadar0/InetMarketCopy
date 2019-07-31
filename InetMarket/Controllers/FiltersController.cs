@@ -19,14 +19,20 @@ namespace InetMarket.Controllers
         }
 
         // GET: Filters
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId)
         {
+            IQueryable<Filter> filtersCateg = _context.Filters.Include(p => p.Category);
+            if (categoryId != null && categoryId != 0)
+            {
+                filtersCateg = filtersCateg.Where(p => p.CategoryId == categoryId);
+            }
             List<Category> categories = _context.Categories.ToList();
             // устанавливаем начальный элемент, который позволит выбрать всех
             categories.Insert(0, new Category { Title = "All", Id = 0 });
             FilterListView flv = new FilterListView
             {
                 Categories = new SelectList(categories, "Id", "Title"),
+                Filters = filtersCateg.ToList(),
             };
             return View(flv);
         }
@@ -34,7 +40,6 @@ namespace InetMarket.Controllers
         [HttpGet]
         public PartialViewResult CategorySearch(int? categoryId)
         {
-
             IQueryable<Filter> filtersCateg = _context.Filters.Include(p => p.Category);
             if (categoryId != null && categoryId != 0)
             {
@@ -47,32 +52,35 @@ namespace InetMarket.Controllers
             return PartialView(flv);
         }
 
-        // GET: Filters/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet]
+        public PartialViewResult FilterSearch(int? filterId)
         {
-            List<Category> categories = _context.Categories.ToList();
-            if (id == null)
+            IQueryable<FilterAddititon> filterAddititonsFilter = _context.FilterAddititons.Include(p => p.Filter);
+            if (filterId != null && filterId != 0)
             {
-                return NotFound();
+                filterAddititonsFilter = filterAddititonsFilter.Where(p => p.FilterId == filterId);
             }
-
-            var filter = await _context.Filters
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (filter == null)
+            FilterAddititonListView falv = new FilterAddititonListView
             {
-                return NotFound();
-            }
+                FilterAddititons = filterAddititonsFilter.ToList(),
+            };
+            return PartialView(falv);
+        }
 
-            return View(filter);
+        // GET: Filters/Details/5
+        public PartialViewResult Details(int? id)
+        {
+            Filter filter = _context.Filters.Find(id);
+            return PartialView(filter);
         }
 
         // GET: Filters/Create
-        public IActionResult Create()
+        public PartialViewResult Create()
         {
             SelectList categories = new SelectList(_context.Categories, "Id", "Title");
             ViewBag.Categories = categories;
 
-            return View();
+            return PartialView();
         }
 
         // POST: Filters/Create
@@ -92,22 +100,13 @@ namespace InetMarket.Controllers
         }
 
         // GET: Filters/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public PartialViewResult Edit(int? id)
         {
             SelectList categories = new SelectList(_context.Categories, "Id", "Title");
             ViewBag.Categories = categories;
 
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var filter = await _context.Filters.FindAsync(id);
-            if (filter == null)
-            {
-                return NotFound();
-            }
-            return View(filter);
+            Filter filter = _context.Filters.Find(id);
+            return PartialView(filter);
         }
 
         // POST: Filters/Edit/5
@@ -146,21 +145,10 @@ namespace InetMarket.Controllers
         }
 
         // GET: Filters/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public PartialViewResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var filter = await _context.Filters
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (filter == null)
-            {
-                return NotFound();
-            }
-
-            return View(filter);
+            Filter filter = _context.Filters.Find(id);
+            return PartialView(filter);
         }
 
         // POST: Filters/Delete/5
@@ -168,6 +156,16 @@ namespace InetMarket.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            List<FilterAddititon> filterAddititons = _context.FilterAddititons.ToList();
+            foreach (var item in filterAddititons)
+            {
+                if (item.FilterId == id)
+                {
+                    var filterAddititon = await _context.FilterAddititons.FindAsync(item.Id);
+                    _context.FilterAddititons.Remove(filterAddititon);
+                    await _context.SaveChangesAsync();
+                }
+            }
             var filter = await _context.Filters.FindAsync(id);
             _context.Filters.Remove(filter);
             await _context.SaveChangesAsync();

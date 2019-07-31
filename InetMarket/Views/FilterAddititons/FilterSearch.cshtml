@@ -4,33 +4,33 @@
     <thead>
         @foreach (var item in Model.FilterAddititons)
         {
-        <tr>
-            <th>
-                @Html.DisplayNameFor(modellItem => item.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(modellItem => item.FilterId)
-            </th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.FilterId)
+                </th>
+                <th></th>
+            </tr>
             break;
         }
     </thead>
     <tbody>
         @foreach (var item in Model.FilterAddititons) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Filter.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Подробно</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-            </td>
-        </tr>
-}
+             <tr>
+                 <td>
+                     @Html.DisplayFor(modelItem => item.Title)
+                 </td>
+                 <td>
+                     @Html.DisplayFor(modelItem => item.Filter.Title)
+                 </td>
+                 <td>
+                     @Html.ActionLink("Изменить", "Edit", new { id = item.Id }, new { @class = "compItem" }) |
+                     @Html.ActionLink("Подробно", "Details", new { id = item.Id }, new { @class = "compItem" }) |
+                     @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "compItem" })
+                 </td>
+             </tr>
+         }
     </tbody>
 </table>

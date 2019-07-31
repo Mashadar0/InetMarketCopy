@@ -19,14 +19,20 @@ namespace InetMarket.Controllers
         }
 
         // GET: FilterAddititons
-        public IActionResult Index()
-        {      
+        public IActionResult Index(int? filterId)
+        {
+            IQueryable<FilterAddititon> filterAddititonsFilter = _context.FilterAddititons.Include(p => p.Filter);
+            if (filterId != null && filterId != 0)
+            {
+                filterAddititonsFilter = filterAddititonsFilter.Where(p => p.FilterId == filterId);
+            }
             List<Filter> filters = _context.Filters.ToList();
             // устанавливаем начальный элемент, который позволит выбрать всех
             filters.Insert(0, new Filter { Title = "All", Id = 0 });
             FilterAddititonListView falv = new FilterAddititonListView
             {
                 Filters = new SelectList(filters, "Id", "Title"),
+                FilterAddititons = filterAddititonsFilter.ToList(),
             };
             return View(falv);
         }
@@ -47,31 +53,22 @@ namespace InetMarket.Controllers
         }
 
         // GET: FilterAddititons/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet]
+        public PartialViewResult Details(int? id)
         {
             List<Filter> filters = _context.Filters.ToList();
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var filterAddititon = await _context.FilterAddititons
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (filterAddititon == null)
-            {
-                return NotFound();
-            }
-
-            return View(filterAddititon);
+            FilterAddititon filterAddititon = _context.FilterAddititons.Find(id);
+            return PartialView(filterAddititon);
         }
 
         // GET: FilterAddititons/Create
-        public IActionResult Create()
+        [HttpGet]
+        public PartialViewResult Create()
         {
             SelectList filters = new SelectList(_context.Filters, "Id", "Title");
             ViewBag.Filters = filters;
 
-            return View();
+            return PartialView();
         }
 
         // POST: FilterAddititons/Create
@@ -91,19 +88,12 @@ namespace InetMarket.Controllers
         }
 
         // GET: FilterAddititons/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public PartialViewResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var filterAddititon = await _context.FilterAddititons.FindAsync(id);
-            if (filterAddititon == null)
-            {
-                return NotFound();
-            }
-            return View(filterAddititon);
+            SelectList filters = new SelectList(_context.Filters, "Id", "Title");
+            ViewBag.Filters = filters;
+            var filterAddititon = _context.FilterAddititons.Find(id);
+            return PartialView(filterAddititon);
         }
 
         // POST: FilterAddititons/Edit/5
@@ -142,21 +132,11 @@ namespace InetMarket.Controllers
         }
 
         // GET: FilterAddititons/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet]
+        public PartialViewResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var filterAddititon = await _context.FilterAddititons
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (filterAddititon == null)
-            {
-                return NotFound();
-            }
-
-            return View(filterAddititon);
+            FilterAddititon filterAddititon = _context.FilterAddititons.Find(id);
+            return PartialView(filterAddititon);
         }
 
         // POST: FilterAddititons/Delete/5
@@ -167,7 +147,7 @@ namespace InetMarket.Controllers
             var filterAddititon = await _context.FilterAddititons.FindAsync(id);
             _context.FilterAddititons.Remove(filterAddititon);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View();
         }
 
         private bool FilterAddititonExists(int id)

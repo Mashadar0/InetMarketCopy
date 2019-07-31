@@ -1,72 +1,74 @@
 ﻿@model InetMarket.Models.Product
 
-@{
-    ViewData["Title"] = "Подробно о продукте";
-}
-
-<h2>Подробно</h2>
-
-<div>
-    <h4>Продукт</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MainImage)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MainImage)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDiscount)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsDiscount)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsMane)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsMane)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Category.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.BrandId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Brand.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProviderId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Provider.Title)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Изменить</a> |
-    <a asp-action="Index">Назад к списку</a>
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">Закрыть</button>
+        <h4>Подробно</h4>
+    </div>
+    <div class="modal-body">
+        <div>
+            <h4>Продукт</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.MainImage)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.MainImage)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsDiscount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.IsDiscount)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsMane)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.IsMane)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CategoryId)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Category.Title)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.BrandId)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Brand.Title)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProviderId)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Provider.Title)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }, new { @class = "compItem" }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = Model.Id }, new { @class = "compItem" })
+        </div>
+    </div>
 </div>

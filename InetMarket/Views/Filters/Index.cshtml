@@ -4,13 +4,18 @@
     ViewData["Title"] = "Список фильтров";
 }
 
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+
 <h2>Список</h2>
 
 <p>
-    <a asp-action="Create">Добавить</a>
+    @Html.ActionLink("Добавить", "Create", new { }, new { @class = "compItem" })
 </p>
 
-<form action="/Filters/CategorySearch" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" id="form0" method="get" data-ajax-method="get">
+<form action="/Filters/CategorySearch" data-ajax="true" data-ajax-mode="replace"
+      data-ajax-update="#results" id="form0" method="get" data-ajax-method="get" data-ajax-loading="#loading">
     <div class="form-inline">
         <label class="control-label">Категории: </label>
         @Html.DropDownList("categoryId", Model.Categories as SelectList,
@@ -18,5 +23,9 @@
         <input type="submit" value="Фильтр" class="btn btn-default" />
     </div>
 </form>
+<div id="loading" style="display:none; font-weight:bold;">
+    <p>Идет загрузка...</p>
+</div>
+<div id="results">@await Html.PartialAsync("CategorySearch")</div>
 
-<div id="results"></div>
+<script type="text/javascript" src="~/js/test.js" defer></script>

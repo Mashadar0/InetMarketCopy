@@ -25,27 +25,16 @@ namespace InetMarket.Controllers
         }
 
         // GET: Clients/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public PartialViewResult Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var client = await _context.Clients
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            return View(client);
+            Client client = _context.Clients.Find(id);
+            return PartialView(client);
         }
 
         // GET: Clients/Create
-        public IActionResult Create()
+        public PartialViewResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Clients/Create
@@ -65,19 +54,10 @@ namespace InetMarket.Controllers
         }
 
         // GET: Clients/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public PartialViewResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var client = await _context.Clients.FindAsync(id);
-            if (client == null)
-            {
-                return NotFound();
-            }
-            return View(client);
+            Client client = _context.Clients.Find(id);
+            return PartialView(client);
         }
 
         // POST: Clients/Edit/5
@@ -116,21 +96,10 @@ namespace InetMarket.Controllers
         }
 
         // GET: Clients/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public PartialViewResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var client = await _context.Clients
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            return View(client);
+            Client client = _context.Clients.Find(id);
+            return PartialView(client);
         }
 
         // POST: Clients/Delete/5

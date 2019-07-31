@@ -25,27 +25,16 @@ namespace InetMarket.Controllers
         }
 
         // GET: Providers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public PartialViewResult Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var provider = await _context.Providers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (provider == null)
-            {
-                return NotFound();
-            }
-
-            return View(provider);
+            Provider provider = _context.Providers.Find(id);
+            return PartialView(provider);
         }
 
         // GET: Providers/Create
-        public IActionResult Create()
+        public PartialViewResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Providers/Create
@@ -65,19 +54,10 @@ namespace InetMarket.Controllers
         }
 
         // GET: Providers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public PartialViewResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var provider = await _context.Providers.FindAsync(id);
-            if (provider == null)
-            {
-                return NotFound();
-            }
-            return View(provider);
+            Provider provider = _context.Providers.Find(id);
+            return PartialView(provider);
         }
 
         // POST: Providers/Edit/5
@@ -116,21 +96,10 @@ namespace InetMarket.Controllers
         }
 
         // GET: Providers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public PartialViewResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var provider = await _context.Providers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (provider == null)
-            {
-                return NotFound();
-            }
-
-            return View(provider);
+            Provider provider = _context.Providers.Find(id);
+            return PartialView(provider);
         }
 
         // POST: Providers/Delete/5

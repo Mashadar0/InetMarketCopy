@@ -25,27 +25,18 @@ namespace InetMarket.Controllers
         }
 
         // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet]
+        public PartialViewResult Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            Category category = _context.Categories.Find(id);
+            return PartialView(category);
         }
 
         // GET: Categories/Create
-        public IActionResult Create()
+        [HttpGet]
+        public PartialViewResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Categories/Create
@@ -65,19 +56,11 @@ namespace InetMarket.Controllers
         }
 
         // GET: Categories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [HttpGet]
+        public PartialViewResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
+            Category category = _context.Categories.Find(id);
+            return PartialView(category);
         }
 
         // POST: Categories/Edit/5
@@ -116,21 +99,11 @@ namespace InetMarket.Controllers
         }
 
         // GET: Categories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet]
+        public PartialViewResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            Category category = _context.Categories.Find(id);
+            return PartialView(category);
         }
 
         // POST: Categories/Delete/5
