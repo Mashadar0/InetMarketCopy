@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InetMarket.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InetMarket.Controllers
 {
+    [Authorize]
     public class FiltersController : Controller
     {
         private readonly MarketContext _context;
@@ -53,7 +55,7 @@ namespace InetMarket.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult FilterSearch(int? filterId)
+        public ViewResult FilterSearch(int? filterId)
         {
             IQueryable<FilterAddititon> filterAddititonsFilter = _context.FilterAddititons.Include(p => p.Filter);
             if (filterId != null && filterId != 0)
@@ -64,7 +66,7 @@ namespace InetMarket.Controllers
             {
                 FilterAddititons = filterAddititonsFilter.ToList(),
             };
-            return PartialView(falv);
+            return View(falv);
         }
 
         // GET: Filters/Details/5

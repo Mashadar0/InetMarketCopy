@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InetMarket.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InetMarket.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly MarketContext _context;
@@ -17,7 +19,7 @@ namespace InetMarket.Controllers
         {
             _context = context;
         }
-
+        [AllowAnonymous]
         public IActionResult Index(int? categoryId)
         {
             IQueryable<Product> productsCateg = _context.Products.Include(p => p.Category);
@@ -170,5 +172,80 @@ namespace InetMarket.Controllers
         {
             return _context.Products.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> EditFilters(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var productsModel = await _context.Products.FindAsync(id);
+            List<Filter> filters = await _context.Filters.ToListAsync();
+            List<FilterAddititon> filterAddititons = await _context.FilterAddititons.ToListAsync();
+            List<Value> filterValues = await _context.Values.Where(p => p.ProductId == id).ToListAsync();
+            if (filterValues.Count != 0)
+            {
+                foreach (FilterAddititon fa in filterAddititons)
+                {
+                    if (filterValues.FirstOrDefault(fv => fv.FilterAddId == fa.Id) != null)
+                    {
+                        fa.IsChecked = true;
+                    }
+                    fa.Filter = filters.Find(f => f.Id == fa.FilterId);
+                }
+            }
+            filterAddititons = filterAddititons.OrderBy(f => f.FilterId).ToList();
+            ProductExtViewModel tour = new ProductExtViewModel
+            {
+                Id = productsModel.Id,
+                Title = productsModel.Title,
+                FilterAddititons = filterAddititons
+            };
+
+            if (productsModel == null)
+            {
+                return NotFound();
+            }
+            return View(tour);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditFilters(int id, [Bind("Id, FilterAddititons")] ProductExtViewModel product)
+        {
+            if (id != product.Id)
+            {
+                return NotFound();
+            }
+
+            List<Value> oldFilterValues = await _context.Values.Where(p => p.ProductId == id).ToListAsync();
+            if (oldFilterValues.Count != 0)
+            {
+                foreach (var item in product.FilterAddititons)
+                {
+                    if (item.IsChecked)
+                    {
+                        if (oldFilterValues.FirstOrDefault(fv => fv.FilterAddId == item.Id && fv.ProductId == product.Id) == null)
+                            _context.Update(new Value { FilterAddId = item.Id, ProductId = product.Id });
+                    }
+                    else
+                    {
+                        if (oldFilterValues.FirstOrDefault(fv => fv.FilterAddId == item.Id && fv.ProductId == product.Id) != null)
+                            _context.Remove(oldFilterValues.First(fv => fv.FilterAddId == item.Id && fv.ProductId == product.Id));
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in product.FilterAddititons)
+                    if (item.IsChecked)
+                        _context.Update(new Value { FilterAddId = item.Id, ProductId = product.Id });
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

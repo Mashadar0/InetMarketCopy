@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InetMarket.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InetMarket.Controllers
 {
+    [Authorize]
     public class FilterAddititonsController : Controller
     {
         private readonly MarketContext _context;
@@ -82,7 +84,7 @@ namespace InetMarket.Controllers
             {
                 _context.Add(filterAddititon);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(FilterSearch), "Filters", new { filterId = filterAddititon.FilterId});
             }
             return View(filterAddititon);
         }
@@ -126,7 +128,7 @@ namespace InetMarket.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(FilterSearch), "Filters", new { filterId = filterAddititon.FilterId });
             }
             return View(filterAddititon);
         }
@@ -147,7 +149,7 @@ namespace InetMarket.Controllers
             var filterAddititon = await _context.FilterAddititons.FindAsync(id);
             _context.FilterAddititons.Remove(filterAddititon);
             await _context.SaveChangesAsync();
-            return View();
+            return RedirectToAction(nameof(FilterSearch), "Filters", new { filterId = filterAddititon.FilterId });
         }
 
         private bool FilterAddititonExists(int id)

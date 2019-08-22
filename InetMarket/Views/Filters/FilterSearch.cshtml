@@ -1,52 +1,55 @@
 ﻿@model InetMarket.Models.FilterAddititonListView
 
-<div class="modal-content">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal" area-hidden="true">Закрыть</button>
-        <h4>Доп фильтры</h4>
-    </div>
-    <div class="modal-body">
-        <div class="dl-horizontal">
-            <table class="table">
-                <thead>
-                    @foreach (var item in Model.FilterAddititons)
-                    {
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(modellItem => item.Title)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(modellItem => item.FilterId)
-                            </th>
-                            <th></th>
-                        </tr>
-                        break;
-                    }
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.FilterAddititons)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Filter.Title)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Изменить", "Edit", "FilterAddititons", new { id = item.Id }, new { @class = "compItem" }) |
-                                @Html.ActionLink("Подробно", "Details", "FilterAddititons", new { id = item.Id }, new { @class = "compItem" }) |
-                                @Html.ActionLink("Удалить", "Delete", "FilterAddititons", new { id = item.Id }, new { @class = "compItem" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <p>
-                @Html.ActionLink("Добавить", "Create", "FilterAddititons", new { }, new { @class = "compItem" })
-            </p>
-        </div>
-    </div>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
 </div>
 
+<h4>Доп фильтры</h4>
+<div class="dl-horizontal">
+    <p>
+        @Html.ActionLink("Добавить", "Create", "FilterAddititons", new { }, new { @class = "compItem" })
+    </p>
+    <table class="table">
+        <thead>
+            @foreach (var item in Model.FilterAddititons)
+            {
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(modellItem => item.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(modellItem => item.FilterId)
+                    </th>
+                    <th></th>
+                </tr>
+                break;
+            }
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FilterAddititons)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Filter.Title)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Изменить", "Edit", "FilterAddititons", new { id = item.Id }, new { @class = "compItem" }) |
+                        @Html.ActionLink("Подробно", "Details", "FilterAddititons", new { id = item.Id }, new { @class = "compItem" }) |
+                        @Html.ActionLink("Удалить", "Delete", "FilterAddititons", new { id = item.Id }, new { @class = "compItem" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<a asp-action="Index">Назад</a>
 <script type="text/javascript" src="~/js/test.js" defer></script>
