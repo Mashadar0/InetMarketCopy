@@ -20,6 +20,8 @@ namespace InetMarket.Models
 
         public int? RoleId { get; set; }
 
+        public bool IsBlocked { get; set; }
+
         public Role Role { get; set; }
     }
 }
