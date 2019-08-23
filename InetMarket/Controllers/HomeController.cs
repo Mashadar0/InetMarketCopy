@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace InetMarket.Controllers
 {
+    //допуск только авторизованным пользователям
     [Authorize]
     public class HomeController : Controller
     {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace InetMarket.Models
 {
+    //для привязки доп фильтров к продукту на странице продукта
     public class ProductExtViewModel
     {
         public int Id { get; set; }

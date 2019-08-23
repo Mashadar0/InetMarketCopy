@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace InetMarket.Models
 {
+    //для сортировки доп фильтров по фильтрам
     public class FilterAddititonListView
     {
         public IEnumerable<FilterAddititon> FilterAddititons { get; set; }

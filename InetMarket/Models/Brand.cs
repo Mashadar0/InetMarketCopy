@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace InetMarket.Models
 {
+    //таблица марок авто
     public class Brand
     {
         public int Id { get; set; }

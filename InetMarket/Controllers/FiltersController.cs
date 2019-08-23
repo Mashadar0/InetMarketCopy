@@ -158,6 +158,7 @@ namespace InetMarket.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            //удаление доп фильтров, привязаннх к фильтру
             List<FilterAddititon> filterAddititons = _context.FilterAddititons.ToList();
             foreach (var item in filterAddititons)
             {
@@ -168,6 +169,7 @@ namespace InetMarket.Controllers
                     await _context.SaveChangesAsync();
                 }
             }
+
             var filter = await _context.Filters.FindAsync(id);
             _context.Filters.Remove(filter);
             await _context.SaveChangesAsync();

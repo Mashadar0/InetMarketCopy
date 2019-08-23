@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace InetMarket.Models
 {
+    //таблица поставщиков продукции
     public class Provider
     {
         public int Id { get; set; }
