@@ -31,14 +31,22 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Categories" asp-action="Index">Категории</a></li>
-                    <li><a asp-area="" asp-controller="Orders" asp-action="Index">Заказы</a></li>
-                    <li><a asp-area="" asp-controller="Brands" asp-action="Index">Марки авто</a></li>
-                    <li><a asp-area="" asp-controller="Providers" asp-action="Index">Поставщики</a></li>
-                    <li><a asp-area="" asp-controller="Filters" asp-action="Index">Фильтры</a></li>
-                    <li><a asp-area="" asp-controller="FilterAddititons" asp-action="Index">Доп. фильтры</a></li>
-                    <li><a asp-area="" asp-controller="Products" asp-action="Index">Продукция</a></li>
-                    <li><a asp-area="" asp-controller="Clients" asp-action="Index">Клиенты</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="Clients" asp-action="Index">Клиенты</a></li>
+                        <li><a asp-area="" asp-controller="Orders" asp-action="Index">Заказы</a></li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li><a asp-area="" asp-controller="Categories" asp-action="Index">Категории</a></li>
+                            <li><a asp-area="" asp-controller="Brands" asp-action="Index">Марки авто</a></li>
+                            <li><a asp-area="" asp-controller="Providers" asp-action="Index">Поставщики</a></li>
+                            <li><a asp-area="" asp-controller="Filters" asp-action="Index">Фильтры</a></li>
+                            <li><a asp-area="" asp-controller="FilterAddititons" asp-action="Index">Доп. фильтры</a></li>
+                            <li><a asp-area="" asp-controller="Products" asp-action="Index">Продукция</a></li>
+                            <li><a asp-area="" asp-controller="Users" asp-action="Index">Пользователи</a></li>
+                        }
+                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                    }
                 </ul>
             </div>
         </div>

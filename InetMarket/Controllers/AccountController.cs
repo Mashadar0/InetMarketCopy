@@ -1,4 +1,5 @@
 ﻿using InetMarket.Models;
+using KontinentService.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -36,7 +37,7 @@ namespace InetMarket.Controllers
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    user = new User { Login = model.Email, Password = model.Password };
+                    user = new User { Login = model.Email, Password = HashCodeGenerator.GetHash(model.Password) };
                     Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
                     if (userRole != null)
                         user.Role = userRole;
@@ -66,7 +67,7 @@ namespace InetMarket.Controllers
             {
                 User user = await _context.Users
                     .Include(u => u.Role)
-                    .FirstOrDefaultAsync(u => u.Login == model.Email && u.Password == model.Password);
+                    .FirstOrDefaultAsync(u => u.Login == model.Email && u.Password == HashCodeGenerator.GetHash(model.Password));
                 if (user != null)
                 {
                     await Authenticate(user); // аутентификация

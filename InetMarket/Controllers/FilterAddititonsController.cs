@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace InetMarket.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class FilterAddititonsController : Controller
     {
         private readonly MarketContext _context;
