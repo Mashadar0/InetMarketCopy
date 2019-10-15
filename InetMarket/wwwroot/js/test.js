@@ -1,3 +1,4 @@
+//скрипт для использования ajax
 $(function () {
     $.ajaxSetup({ cache: false });
     $(".compItem").click(function (e) {

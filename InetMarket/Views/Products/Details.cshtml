@@ -26,7 +26,7 @@
                     @Html.DisplayNameFor(model => model.MainImage)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.MainImage)
+                    <img src="@Url.Content(Model.MainImage)" alt="Image" />
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.IsDiscount)

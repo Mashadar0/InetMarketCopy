@@ -21,12 +21,14 @@ namespace InetMarket.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         [Authorize(Roles = "admin")]
         public IActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Register model)

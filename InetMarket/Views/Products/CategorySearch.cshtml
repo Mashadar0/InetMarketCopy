@@ -48,7 +48,7 @@
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.MainImage)
+                            <img src="@Url.Content(item.MainImage)" alt="Image" />
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.IsDiscount)

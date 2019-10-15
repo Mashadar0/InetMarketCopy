@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InetMarket.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace InetMarket.Controllers
 {
@@ -14,12 +17,15 @@ namespace InetMarket.Controllers
     public class ProductsController : Controller
     {
         private readonly MarketContext _context;
-
-        public ProductsController(MarketContext context)
+        IHostingEnvironment _appEnvironment;
+        public ProductsController(MarketContext context, IHostingEnvironment appEnvironment)
         {
             _context = context;
+            _appEnvironment = appEnvironment;
         }
-        [AllowAnonymous]
+
+        // список продуктов с сортировкой по категориям
+        //[AllowAnonymous] возможность просмотра незарегистрированным пользователем
         public IActionResult Index(int? categoryId)
         {
             IQueryable<Product> productsCateg = _context.Products.Include(p => p.Category);
@@ -28,6 +34,7 @@ namespace InetMarket.Controllers
                 productsCateg = productsCateg.Where(p => p.CategoryId == categoryId);
             }
             List<Category> categories = _context.Categories.ToList();
+            //для отображени названий вместо id в таблице
             List<Brand> brands = _context.Brands.ToList();
             List<Provider> providers = _context.Providers.ToList();
             // устанавливаем начальный элемент, который позволит выбрать всех
@@ -40,6 +47,7 @@ namespace InetMarket.Controllers
             return View(plv);
         }
 
+        //отображение результатов сортировки по категориям
         [HttpGet]
         public PartialViewResult CategorySearch(int? categoryId)
         {
@@ -61,9 +69,11 @@ namespace InetMarket.Controllers
         // GET: Products/Details/5
         public PartialViewResult Details(int? id)
         {
+            //для отображени названий вместо id
             List<Category> categories = _context.Categories.ToList();
             List<Brand> brands = _context.Brands.ToList();
             List<Provider> providers = _context.Providers.ToList();
+
             Product product = _context.Products.Find(id);
             return PartialView(product);
         }
@@ -71,6 +81,7 @@ namespace InetMarket.Controllers
         // GET: Products/Create
         public PartialViewResult Create()
         {
+            //отображение выпадающих списковпри добавлении продукта
             SelectList categories = new SelectList(_context.Categories, "Id", "Title");
             ViewBag.Categories = categories;
 
@@ -88,8 +99,19 @@ namespace InetMarket.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,MainImage,IsDiscount,IsMane,CategoryId,Price,BrandId,ProviderId")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,MainImage,IsDiscount,IsMane,CategoryId,Price,BrandId,ProviderId")] Product product, IFormFile uploadedFile)
         {
+            //добавление изображения
+            if (uploadedFile != null)
+            {
+                string path = "/files/" + uploadedFile.FileName;
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                product.MainImage = path;
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(product);
@@ -102,6 +124,7 @@ namespace InetMarket.Controllers
         // GET: Products/Edit/5
         public PartialViewResult Edit(int? id)
         {
+            //отображение выпадающих списковпри изменении продукта
             SelectList categories = new SelectList(_context.Categories, "Id", "Title");
             ViewBag.Categories = categories;
 
@@ -120,11 +143,22 @@ namespace InetMarket.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,MainImage,IsDiscount,IsMane,CategoryId,Price,BrandId,ProviderId")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,MainImage,IsDiscount,IsMane,CategoryId,Price,BrandId,ProviderId")] Product product, IFormFile uploadedFile)
         {
             if (id != product.Id)
             {
                 return NotFound();
+            }
+            //изменение изображения
+            _context.Entry(product).State = EntityState.Modified;
+            if (uploadedFile != null)
+            {
+                string path = "/files/" + uploadedFile.FileName;
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                product.MainImage = path;
             }
 
             if (ModelState.IsValid)
@@ -173,6 +207,7 @@ namespace InetMarket.Controllers
             return _context.Products.Any(e => e.Id == id);
         }
 
+        //привязка доп фильтров к продукту
         public async Task<IActionResult> EditFilters(int? id)
         {
             if (id == null)

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\jquery-ajax-unobtrusive\" />
+    <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
 </Project>

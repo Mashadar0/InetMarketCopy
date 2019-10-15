@@ -1,0 +1,52 @@
+﻿@model InetMarket.Models.ProductListView
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_UserLayout";
+}
+
+<h2>Index</h2>
+
+<table class="table table-striped">
+    <thead>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.MainImage)
+                </th>             
+                <th>
+                    @Html.DisplayNameFor(modellItem => item.Price)
+                </th>
+                <th></th>
+            </tr>
+            break;
+        }
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <img src="@Url.Content(item.MainImage)" alt="Image" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td></td>
+        </tr>
+        }
+    </tbody>
+</table>

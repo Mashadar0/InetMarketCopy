@@ -8,7 +8,6 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/test.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -19,7 +18,7 @@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -31,24 +30,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li><a asp-area="" asp-controller="Clients" asp-action="Index">Клиенты</a></li>
-                        <li><a asp-area="" asp-controller="Orders" asp-action="Index">Заказы</a></li>
-                        @if (User.IsInRole("admin"))
-                        {
-                            <li><a asp-area="" asp-controller="Categories" asp-action="Index">Категории</a></li>
-                            <li><a asp-area="" asp-controller="Brands" asp-action="Index">Марки авто</a></li>
-                            <li><a asp-area="" asp-controller="Providers" asp-action="Index">Поставщики</a></li>
-                            <li><a asp-area="" asp-controller="Filters" asp-action="Index">Фильтры</a></li>
-                            <li><a asp-area="" asp-controller="FilterAddititons" asp-action="Index">Доп. фильтры</a></li>
-                            <li><a asp-area="" asp-controller="Products" asp-action="Index">Продукция</a></li>
-                            <li><a asp-area="" asp-controller="Users" asp-action="Index">Пользователи</a></li>
-                        }
-                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
-                    }
+                    <li><a asp-area="" asp-controller="UserHome" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="UserCategory" asp-action="Index">Категории</a></li>
+                    <li><a asp-area="" asp-controller="UserProduct" asp-action="Index">Продукция</a></li>
                 </ul>
             </div>
         </div>

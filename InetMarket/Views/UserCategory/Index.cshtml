@@ -1,0 +1,28 @@
+﻿@model IEnumerable<InetMarket.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_UserLayout";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-area="" asp-controller="UserProduct" asp-action="Index" asp-route-categoryId="@item.Id">
+                @Html.DisplayFor(modelItem => item.Title)</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

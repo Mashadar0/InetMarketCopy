@@ -20,7 +20,7 @@ namespace InetMarket.Controllers
             _context = context;
         }
 
-        // GET: Filters
+        // список фильтров с сортировкой по категориям
         public IActionResult Index(int? categoryId)
         {
             IQueryable<Filter> filtersCateg = _context.Filters.Include(p => p.Category);
@@ -39,6 +39,7 @@ namespace InetMarket.Controllers
             return View(flv);
         }
 
+        //отображение результатов сортировки по категориям
         [HttpGet]
         public PartialViewResult CategorySearch(int? categoryId)
         {
@@ -54,6 +55,7 @@ namespace InetMarket.Controllers
             return PartialView(flv);
         }
 
+        //отображение доп фильтров привязанных к фильтру
         [HttpGet]
         public ViewResult FilterSearch(int? filterId)
         {
@@ -79,6 +81,7 @@ namespace InetMarket.Controllers
         // GET: Filters/Create
         public PartialViewResult Create()
         {
+            //отображение выпадающего списка категорий при добавлении фильтра
             SelectList categories = new SelectList(_context.Categories, "Id", "Title");
             ViewBag.Categories = categories;
 
@@ -104,6 +107,7 @@ namespace InetMarket.Controllers
         // GET: Filters/Edit/5
         public PartialViewResult Edit(int? id)
         {
+            //отображение выпадающего списка категорий при изменении фильтра
             SelectList categories = new SelectList(_context.Categories, "Id", "Title");
             ViewBag.Categories = categories;
 

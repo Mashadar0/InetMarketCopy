@@ -37,6 +37,7 @@ namespace InetMarket
                     options.AccessDeniedPath = new PathString("/Account/Login");
                 });
 
+            // добавление сервисов фреймворка MVC
             services.AddMvc();
         }
 
@@ -57,13 +58,16 @@ namespace InetMarket
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            //для использования аутентификации в приложении
             app.UseAuthentication();
 
+            // добавление компонентов mvc и определение маршрута
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                app.UseMvcWithDefaultRoute(); //стандартный маршрут
+                //routes.MapRoute(
+                //    name: "default",
+                //    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

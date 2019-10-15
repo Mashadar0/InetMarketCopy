@@ -20,7 +20,7 @@ namespace InetMarket.Controllers
             _context = context;
         }
 
-        // GET: FilterAddititons
+        // список доп фильтров с сортировкой по фильтрам
         public IActionResult Index(int? filterId)
         {
             IQueryable<FilterAddititon> filterAddititonsFilter = _context.FilterAddititons.Include(p => p.Filter);
@@ -39,6 +39,7 @@ namespace InetMarket.Controllers
             return View(falv);
         }
 
+        //отображение результатов сортировки по фильтрам
         [HttpGet]
         public PartialViewResult FilterSearch(int? filterId)
         {
@@ -67,6 +68,7 @@ namespace InetMarket.Controllers
         [HttpGet]
         public PartialViewResult Create()
         {
+            //отображение выпадающего списка фильтров при добавлении доп фильтра
             SelectList filters = new SelectList(_context.Filters, "Id", "Title");
             ViewBag.Filters = filters;
 
@@ -92,8 +94,10 @@ namespace InetMarket.Controllers
         // GET: FilterAddititons/Edit/5
         public PartialViewResult Edit(int? id)
         {
+            //отображение выпадающего списка фильтров при изменении доп фильтра
             SelectList filters = new SelectList(_context.Filters, "Id", "Title");
             ViewBag.Filters = filters;
+
             var filterAddititon = _context.FilterAddititons.Find(id);
             return PartialView(filterAddititon);
         }

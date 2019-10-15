@@ -1,0 +1,31 @@
+﻿.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+    overflow-x: scroll;
+    padding-right: 0px;
+    padding-left: 0px;
+    width: 100%;
+}
+
+.nowrap {
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+
+.wrap {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}  
+
+.flex-item {
+    line-height: 100px;
+    flex-shrink: 0;
+}

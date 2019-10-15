@@ -19,7 +19,7 @@ namespace InetMarket.Controllers
             //string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
             //return Content($"ваша роль: {role}");
             return View();
-        }       
+        } 
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
